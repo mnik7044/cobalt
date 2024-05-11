@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
+const cors = require("cors");
 
 dotenv.config();
 connectDB();
@@ -20,6 +21,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+//cors
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 // Passport middleware
 app.use(passport.initialize());

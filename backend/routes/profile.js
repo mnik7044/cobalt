@@ -7,12 +7,13 @@ router.get("/profile", (req, res) => {
     return res.status(401).json({ error: "User not authenticated" });
   }
   // Assuming req.user contains the user object after successful authentication
-  res.json({
-    id: req.user.id,
-    name: req.user.name,
-    email: req.user.email,
-    avatar: req.user.avatar,
-  });
+  if (req.user) {
+    res.cookie("email", req.user.email, { secure: true });
+    res.cookie("name", req.user.name, { secure: true });
+    res.cookie("avatar", req.user.avatar, { secure: true });
+    res.cookie("id", req.user._id, { secure: true });
+  }
+  res.redirect("http://localhost:3000/profile");
 });
 
 module.exports = router;
