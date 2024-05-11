@@ -1,7 +1,8 @@
-const { WebClient } = require("@slack/web-api");
-const User = require("../models/User");
+const { WebClient } = require("@slack/web-api"); // Import WebClient from Slack SDK
+const User = require("../models/User"); // Import User model
 
 async function sendMessage(userData) {
+  // Function to send message to Slack
   const webClient = new WebClient(process.env.SLACK_TOKEN);
   const message = `User: ${userData.name}, Email: ${userData.email}`;
   try {
@@ -16,6 +17,7 @@ async function sendMessage(userData) {
 }
 
 async function sendUserData(user) {
+  // Function to send user data to Slack
   try {
     if (user) {
       await sendMessage(user);
@@ -27,4 +29,4 @@ async function sendUserData(user) {
   }
 }
 
-module.exports = { sendUserData };
+module.exports = { sendUserData }; // Export the function

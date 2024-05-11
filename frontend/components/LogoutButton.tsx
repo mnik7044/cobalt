@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const LogoutButton = () => {
+const LogoutButton = () => { // Logout Button
   const router = useRouter();
   function handleClick() {
     // Clear the cookie

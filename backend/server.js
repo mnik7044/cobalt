@@ -8,14 +8,15 @@ const profileRoutes = require("./routes/profile");
 const cors = require("cors");
 const slackController = require("./controllers/slackController");
 
-dotenv.config();
-connectDB()
+dotenv.config(); // Load config
+
+connectDB() // Connect to MongoDB
   .then(() => {
-    slackController.sendUserData();
+    slackController.sendUserData(); // Send user data to Slack
   })
   .catch((err) => console.error(err));
 
-const app = express();
+const app = express(); // Initialize express
 const port = process.env.PORT || 5000;
 
 // Session configuration
@@ -37,10 +38,10 @@ app.use(passport.session());
 // Require your Passport configuration
 require("./config/passport");
 
-app.use(express.json());
-app.use(authRoutes);
-app.use(profileRoutes);
+app.use(express.json()); // Body parser
+app.use(authRoutes); // Use auth routes
+app.use(profileRoutes); // Use profile routes
 
-app.get("/", (req, res) => res.send("API Running"));
+app.get("/", (req, res) => res.send("API Running")); // Test route
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Server started on port ${port}`)); // Start server

@@ -1,8 +1,9 @@
-const passport = require("passport");
-const User = require("../models/User");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const passport = require("passport"); // Import passport
+const User = require("../models/User"); // Import User model
+const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import Google OAuth strategy
 
 passport.use(
+  // Use Google OAuth strategy
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -10,6 +11,7 @@ passport.use(
       callbackURL: process.env.CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, cb) => {
+      // Callback function
       // Create a new user object based on your User schema
       const newUser = {
         googleId: profile.id, // This field isn't in your schema and won't be saved unless you add it.
@@ -18,6 +20,7 @@ passport.use(
         avatar: profile.photos[0]?.value, // Handle the case where photos might not be available
       };
       try {
+        // Try to find the user in the database
         let user = await User.findOne({ email: newUser.email });
         if (user) {
           cb(null, user);
@@ -26,6 +29,7 @@ passport.use(
           cb(null, user);
         }
       } catch (err) {
+        // Handle errors
         console.error("Error in Google Strategy", err);
         cb(err, null);
       }

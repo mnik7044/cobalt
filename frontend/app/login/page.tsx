@@ -1,12 +1,8 @@
 "use client";
-// Popup Window Code
-// After successful login in your popup window, send JSON data to the parent window
-// For example, after successful login, you might have something like this in your popup window code:
-// window.opener.postMessage({ status: "success", userData: { /* your user data here */ } }, "http://localhost:3000");
+
 
 // Parent Window Code
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react"; 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -20,7 +16,7 @@ export default function LoginPage() {
       router.push("/profile");
     }
   }, []);
-  const handleClick = () => {
+  const handleClick = () => { // Redirect to Google Auth
     const url = "http://localhost:5000/auth/google";
     router.replace(url);
   };
@@ -41,7 +37,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {userData && (
+      {userData && ( // Display User Data
         <div className="flex items-center justify-center py-12">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">

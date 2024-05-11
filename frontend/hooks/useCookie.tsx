@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"; // Import Cookies from js-cookie
 
-interface User {
+interface User { // User Interface
   id: string | null;
   email: string | null;
   avatar: string | null;
@@ -10,15 +10,15 @@ interface User {
 }
 
 export const useUser = (): User => {
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<User>({ // User State
     id: null,
     email: null,
     avatar: null,
     name: null,
   });
-  const router = useRouter();
+  const router = useRouter(); // Router
 
-  useEffect(() => {
+  useEffect(() => { // Fetch User Data from Cookies
     const fetchUserFromCookies = () => {
       const id = Cookies.get("id") ?? null;
       const email = Cookies.get("email") ?? null;
@@ -33,7 +33,7 @@ export const useUser = (): User => {
       }
     };
 
-    fetchUserFromCookies();
+    fetchUserFromCookies(); // Fetch User Data
   }, [router]); // include router in the dependency array
 
   return user;

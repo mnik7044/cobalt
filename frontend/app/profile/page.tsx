@@ -4,10 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/hooks/useCookie";
 import LogoutButton from "@/components/LogoutButton";
 
-const ProfileCard = () => {
+const ProfileCard = () => { // Profile Page
   const { id, email, avatar, name } = useUser();
 
-  return (
+  return ( // Display User Data
     <div className="h-screen bg-black flex flex-col  items-center pt-20 ">
       <div className="mb-10">
         <LogoutButton />
@@ -28,4 +28,4 @@ const ProfileCard = () => {
   );
 };
 
-export default ProfileCard;
+export default ProfileCard; // Export ProfileCard
