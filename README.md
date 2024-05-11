@@ -24,6 +24,9 @@ This project integrates OAuth2 authentication using Gmail for the backend and pr
   SLACK_TOKEN=your_slack_api_token
   GOOGLE_CLIENT_ID=your_google_client_id
   GOOGLE_CLIENT_SECRET=your_google_client_secret
+  BASE_URL=your_base_url
+  CALLBACK_URL="your_callback_url
+  SLACK_CHANNEL_ID= your_slack_channel_id
   ```
 
 5. Start the server: npm start
