@@ -2,6 +2,10 @@
 
 This project integrates OAuth2 authentication using Gmail for the backend and provides a user interface using Next.js on the frontend. It securely stores user details in MongoDB and integrates with the Slack API to send details to a specified Slack channel.
 
+## Flow Of The Project
+
+![alt text](image.png)
+
 ## Backend (Node.js)
 
 ### Requirements
