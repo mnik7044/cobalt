@@ -16,21 +16,50 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Access the application at `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Pages and Features
 
-## Learn More
+### Login Page
 
-To learn more about Next.js, take a look at the following resources:
+- **Path:** `/login`
+- **Description:** Initiates the OAuth2 login process. Users click on the "Login with Gmail" button, which redirects them to the Google authentication flow.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Profile Page
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Path:** `/profile`
+- **Description:** Displays user information after successful authentication. The page fetches user details like name, email, avatar, and ID from cookies set by the backend and displays them.
 
-## Deploy on Vercel
+## Integrations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Google OAuth2:** Authenticates users via Google.
+- **MongoDB:** Interacts with the backend to retrieve user details stored in the database.
+- **Slack API:** The backend sends a notification to a specified Slack channel upon successful user login.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Handling User Data
+
+- **Cookies:** After logging in, the backend sets cookies containing the user's name, email, avatar, and ID. The frontend fetches this data from the cookies to display on the profile page.
+
+## Security Practices
+
+- Ensure cookies are set with `secure: true` to prevent unauthorized access.
+- Implement proper error handling to manage scenarios where authentication fails or cookies are not set correctly.
+
+## Development Tips
+
+- Use the React Context API or a state management library like Redux to manage authenticated state across components.
+- Implement conditional rendering in the UI based on authentication status to enhance user experience.
+
+## Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+
+## Troubleshooting
+
+- **Login Issues:** Ensure that the backend is correctly configured to accept requests from the frontend's domain.
+- **Cookie Handling:** If user details are not displaying, check that cookies are being set and accessed correctly.
+
+## Conclusion
+
+This frontend setup provides a robust user interface for managing OAuth2 authentication and displaying user details, integrating closely with a backend server for full application functionality.
