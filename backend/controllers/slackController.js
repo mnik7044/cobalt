@@ -1,33 +1,30 @@
-const slackClient = require("../config/slackConfig");
+const { WebClient } = require("@slack/web-api");
+const User = require("../models/User");
 
-const postUserDetailsToChannel = async (user) => {
-  const text = `New Login: ${user.name}, Email: ${user.email}, Avatar: ${user.avatar}`;
+async function sendMessage(userData) {
+  const webClient = new WebClient(process.env.SLACK_TOKEN);
+  const message = `User: ${userData.name}, Email: ${userData.email}`;
   try {
-    const res = await slackClient.chat.postMessage({
+    const result = await webClient.chat.postMessage({
+      text: message,
       channel: process.env.SLACK_CHANNEL_ID,
-      text: text,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `*New Login:* \nName: *${user.name}*\nEmail: *${user.email}*`,
-          },
-          accessory: {
-            type: "image",
-            image_url: user.avatar,
-            alt_text: "profile picture",
-          },
-        },
-      ], // This adds a rich layout with the user's name, email, and profile picture.
     });
-    return res.ok;
+    console.log("Message sent", result);
   } catch (error) {
-    console.error("Error posting to Slack:", error);
-    return false;
+    console.error("Error:", error);
   }
-};
+}
 
-module.exports = {
-  postUserDetailsToChannel,
-};
+async function sendUserData(user) {
+  try {
+    if (user) {
+      await sendMessage(user);
+    } else {
+      console.log("No user found");
+    }
+  } catch (error) {
+    console.error("Error processing user data:", error);
+  }
+}
+
+module.exports = { sendUserData };

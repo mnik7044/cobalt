@@ -6,9 +6,14 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const cors = require("cors");
+const slackController = require("./controllers/slackController");
 
 dotenv.config();
-connectDB();
+connectDB()
+  .then(() => {
+    slackController.sendUserData();
+  })
+  .catch((err) => console.error(err));
 
 const app = express();
 const port = process.env.PORT || 5000;

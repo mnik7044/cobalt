@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// Ensure you have some form of middleware to protect this route
+// Profile route
 router.get("/profile", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "User not authenticated" });

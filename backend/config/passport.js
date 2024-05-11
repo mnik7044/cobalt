@@ -1,45 +1,44 @@
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/User");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: process.env.CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, cb) => {
+      const newUser = {
+        googleId: profile.id,
+        displayName: profile.displayName,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        image: profile.photos[0].value,
+        email: profile.emails[0].value,
+      };
       try {
-        // Check if user already exists in your DB
-        const existingUser = await User.findOne({ googleId: profile.id });
-        if (existingUser) {
-          return cb(null, existingUser);
+        let user = await User.findOne({ googleId: profile.id });
+        if (user) {
+          cb(null, user);
+        } else {
+          user = await User.create(newUser);
+          cb(null, user);
         }
-        // If not, create a new user in your DB
-        const newUser = await User.create({
-          googleId: profile.id,
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          avatar: profile.photos[0].value,
-        });
-        return cb(null, newUser);
-      } catch (error) {
-        return cb(error);
+      } catch (err) {
+        cb(err, null);
       }
     }
   )
 );
 
-passport.serializeUser((user, cb) => {
-  cb(null, user.id);
-});
-
+passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    done(null, user);
+    done(null, user); // Pass the user object to done
   } catch (error) {
-    done(error);
+    done(error); // Handle errors
   }
 });
